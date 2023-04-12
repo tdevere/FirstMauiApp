@@ -7,6 +7,8 @@ workflows:
         BUILD_PLATFORM: 'Any CPU'
         BUILD_CONFIGURATION: 'Release'
     scripts:
+    - name: 'Download Repository'
+        script: 'git clone https://github.com/tdevere/FirstMauiApp.git /builds'
       - name: 'Restore NuGet packages'
         script: 'dotnet restore $SOLUTION'
       - name: 'Build Android'
