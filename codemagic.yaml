@@ -7,6 +7,9 @@ workflows:
         BUILD_PLATFORM: 'Any CPU'
         BUILD_CONFIGURATION: 'Release'
     scripts:
+    - name: Install .NET MAUI
+      script: |
+        sudo installer -pkg https://aka.ms/dotnet-maui/sdk/Preview3/dotnet-maui-sdk-6.0.100-preview.3.21202.5-macos-x64.pkg -target /
       - name: 'Change Directory'
         script: 'cd /Users/builder/clone'
       - name: 'Restore NuGet packages'
