@@ -1,1 +1,21 @@
-##
+workflows:
+  main:
+    name: 'Build and test'
+    environment:
+      vars:
+        SOLUTION: '**/*.sln'
+        BUILD_PLATFORM: 'Any CPU'
+        BUILD_CONFIGURATION: 'Release'
+    scripts:
+      - name: 'Restore NuGet packages'
+        script: 'dotnet restore $SOLUTION'
+      - name: 'Build Android'
+        script: 'msbuild /t:PackageForAndroid /p:Configuration=$BUILD_CONFIGURATION $SOLUTION'
+      - name: 'Build iOS'
+        script: 'msbuild /t:Build /p:Platform=iPhone /p:OutputPath=$BITRISE_DEPLOY_DIR/iOS $SOLUTION'
+      - name: 'Build Mac Catalyst'
+        script: 'msbuild /t:Build /p:OutputPath=$BITRISE_DEPLOY_DIR/MacCatalyst $SOLUTION'
+      - name: 'Test iOS'
+        script: 'msbuild /t:RunTests /p:Platform=iPhone /p:OutputPath=$BITRISE_DEPLOY_DIR/iOS $SOLUTION'
+      - name: 'Test Mac Catalyst'
+        script: 'msbuild /t:RunTests /p:OutputPath=$BITRISE_DEPLOY_DIR/MacCatalyst $SOLUTION'
