@@ -9,6 +9,13 @@ workflows:
     scripts:
       - name: Install .NET MAUI
         script: |
+          echo "downloading dotnet install script" &&
+          curl -sSL https://dot.net/v1/dotnet-install.sh &&
+          echo "installing dotnet" &&
+          ./dotnet-install.sh --runtime dotnet --version 6.0.0 &&
+          echo "DotNet Version" &&
+          dotnet --version &&
+          echo "installing maui" &&
           sudo installer -pkg https://aka.ms/dotnet-maui/sdk/Preview3/dotnet-maui-sdk-6.0.100-preview.3.21202.5-macos-x64.pkg -target /
       - name: 'Change Directory'
         script: 'cd /Users/builder/clone'
